@@ -1,0 +1,17 @@
+plugins {
+}
+version = '0.0.1'
+
+dependencies {
+}
+
+tasks.withType(org.springframework.boot.gradle.tasks.bundling.BootJar).configureEach {
+    enabled = false
+}
+
+tasks.withType(Jar).configureEach {
+    enabled = true
+}
+bootJar {
+    enabled = false
+}

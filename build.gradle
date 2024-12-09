@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.6.3' apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+}
+
+allprojects {
+    group = "focandlol"
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    tasks.withType(Test) {
+        useJUnitPlatform()
+    }
+
+    dependencies {
+        implementation "org.springframework.boot:spring-boot-starter"
+        testImplementation "org.springframework.boot:spring-boot-starter-test"
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+    }
+}
+
+project(":domain") {
+    tasks.withType(org.springframework.boot.gradle.tasks.bundling.BootJar).configureEach {
+        enabled = false
+    }
+
+    tasks.withType(Jar).configureEach {
+        enabled = true
+    }
+
+    tasks.named("build").configure {
+        dependsOn("jar")
+    }
+}
+
+project(":product") {
+    dependencies {
+        implementation project(":domain")
+    }
+}
+
+project(":user") {
+    dependencies {
+        implementation project(":domain")
+    }
+}
+
+
