@@ -22,7 +22,6 @@ import static focandlol.exception.errorcode.ProductErrorCode.ALREADY_PRODUCT;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class ProductServiceImpl implements ProductService {
 
     private final CacheManager redisCacheManager;
@@ -30,6 +29,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductInfoRepository productInfoRepository;
 
     @Override
+    @Transactional
     public void save(ProductInfoDto.Request request) {
         if(check(request)){
             throw new ProductException(ALREADY_PRODUCT);

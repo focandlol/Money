@@ -15,13 +15,13 @@ import static focandlol.exception.errorcode.UserErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserInfoRepository userInfoRepository;
     private final GenerateKey generateKey;
 
     @Override
+    @Transactional
     public UserInfoDto.Response save(UserInfoDto.Request request){
         String userKey = generateKey.generateUserKey();
         userInfoRepository.save(request.toEntity(userKey));
